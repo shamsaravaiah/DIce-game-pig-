@@ -19,4 +19,4 @@ class Player:
     
     def __str__(self) :
 
-        return f"Name: {self.get_name()},Score: {self.get_score()}"
+        return f"Name: {self.get_name()}, Score: {self.get_score()}"
