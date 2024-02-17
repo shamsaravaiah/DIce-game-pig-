@@ -10,7 +10,7 @@ class Player:
         return self.__name
     
     def set_score(self,score):
-        self.__score=score 
+        self.__score+=score 
     def get_score(self):
         return self.__score
     
@@ -19,4 +19,4 @@ class Player:
     
     def __str__(self) :
 
-        return f"Name: {self.get_name()}, Score: {self.get_score()}"
+        return f"Name: {self.get_name()}, Score: {self.get_score()}"  
