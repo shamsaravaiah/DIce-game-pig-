@@ -1,5 +1,3 @@
-import random
-
 
 class Dice:
 
@@ -46,23 +44,32 @@ class Dice:
     def get_dice(self):
         return self.__dice_dict
 
+    
+
     def over_all_score(self,name, score):
         return f"""
     ┌──────────────────────────┐
-    │      {name} start:      │ 
+    │       {name}             │
     │                          │
-    │   over all score:{score}       │
-    └──────────────────────────┘"""
-    
-    def current_score(self,sum):
+    │       {score}            │
+    └──────────────────────────┘
+    """
+
+
+
+
+    def current_score(self, sum):
         return f"""
     ┌──────────────────────────┐
-    │      Current Score       │ 
     │                          │
-    │            {sum}             │
-    └──────────────────────────┘"""
+    │       {sum}              │
+    │                          │
+    └──────────────────────────┘
+    """
 
-        
+
+
+
         
     
 
