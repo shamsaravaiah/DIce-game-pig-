@@ -32,8 +32,8 @@ class Game:
                 num_dice = dice.roll_dice()
                 dice.display(name, score, turn_total, num_dice) #changed turn_total to 0
                 if num_dice != 1:
+                    turn_total += num_dice
                     if not isinstance(self.current_player[player_index], Human_Player): #ill explain this dont cry
-                        turn_total += num_dice
                         continue_var = (self.current_player[player_index]).make_move(self.player1.get_score(), self.player2.get_score())
                         print(f'\nSouxie chose to {continue_var}')
                         time.sleep(1)
@@ -44,7 +44,6 @@ class Game:
                             player_index = 1 - player_index
                             turn_total = 0               
                     else:
-                        turn_total += num_dice
                         continue_var = self.current_player[player_index].make_move()     
                         if continue_var == 'quit':
                             print(f'{name} has left the game, with score -> {score}')
@@ -54,9 +53,9 @@ class Game:
                         elif continue_var == 'restart':
                             pass
                         elif continue_var == 'hold':
-                            turn_total = 0
                             self.current_player[player_index].set_score(turn_total)
                             player_index = 1 - player_index
+                            turn_total = 0
                         else: #roll
                             continue
                 else:
@@ -66,6 +65,7 @@ class Game:
                     color = Fore.RED  # For example, you can use Fore.RED for red text
                     ascii_art = pyfiglet.figlet_format(f"{name} ROLLED A 1", font="big_money-se")
                     print(color + ascii_art + Style.RESET_ALL)  # Reset the color after printing
+                    turn_total = 0
                     time.sleep(2)
                     continue
             
