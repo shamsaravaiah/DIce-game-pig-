@@ -1,9 +1,10 @@
 from dice import Dice
-import random
 import os
-from player import Computer_Player
+from player import Human_Player
 import time
-
+import pyfiglet
+from colorama import Fore, Style
+from check_platform import clear_command
 
 class Game:
 
@@ -12,44 +13,64 @@ class Game:
         self.player2 = player2
         self.current_player = [player1, player2]
 
-    def roll_dice(self):
-        return random.randint(1, 6)
     
     def Start_Game(self):
         gave_over = False
         player_index = 0
-        sum = 0
-        continue_var = None
+        turn_total = 0
+        continue_var = None # now its roll 
+        clear = clear_command
         while not gave_over:
-            os.system('clear')
+            os.system(clear)
             if self.current_player[player_index].get_score() >= 100:
-                print(f"winner:{self.current_player[player_index].get_name} \nscore: {self.current_player[player_index].get_score()}")
                 gave_over = True
-
+                break
             else:
                 name = self.current_player[player_index].get_name()
                 score = self.current_player[player_index].get_score()
                 dice = Dice()
-                num_dice = self.roll_dice()
-                print(dice.over_all_score(name, score))
-                print()
-                print(dice.get_dice()[num_dice])
-                print(dice.current_score(sum))
-                
-                if num_dice != 1 and isinstance(self.current_player[player_index], Computer_Player):
-                    continue_var = (self.current_player[player_index]).make_move()
-                    time.sleep(1) 
-
+                num_dice = dice.roll_dice()
+                dice.display(name, score, turn_total, num_dice) #changed turn_total to 0
                 if num_dice != 1:
-                    sum += num_dice
-                    continue_var = self.current_player[player_index].make_move()     
-                    if continue_var == "h":
-                        self.current_player[player_index].set_score(sum)
-                        sum = 0
-                        player_index = 1 - player_index
-                    elif continue_var == 'r':
-                        continue
+                    if not isinstance(self.current_player[player_index], Human_Player): #ill explain this dont cry
+                        turn_total += num_dice
+                        continue_var = (self.current_player[player_index]).make_move(self.player1.get_score(), self.player2.get_score())
+                        print(f'\nSouxie chose to {continue_var}')
+                        time.sleep(1)
+                        if continue_var == 'roll':
+                            continue
+                        else:
+                            self.current_player[player_index].set_score(turn_total)
+                            player_index = 1 - player_index
+                            turn_total = 0               
+                    else:
+                        turn_total += num_dice
+                        continue_var = self.current_player[player_index].make_move()     
+                        if continue_var == 'quit':
+                            print(f'{name} has left the game, with score -> {score}')
+                            print(f'name : {self.current_player[0].get_name()}, score : {self.current_player[0].get_score()}')
+                            print(f'name : {self.current_player[1].get_name()}, score : {self.current_player[1].get_score()}')
+                            break
+                        elif continue_var == 'restart':
+                            pass
+                        elif continue_var == 'hold':
+                            turn_total = 0
+                            self.current_player[player_index].set_score(turn_total)
+                            player_index = 1 - player_index
+                        else: #roll
+                            continue
                 else:
-                    print(f" YOU LOST {name}")
+                    time.sleep(1)
+                    os.system('clear')
                     player_index = 1 - player_index
-                time.sleep(1)
+                    color = Fore.RED  # For example, you can use Fore.RED for red text
+                    ascii_art = pyfiglet.figlet_format(f"{name} ROLLED A 1", font="big_money-se")
+                    print(color + ascii_art + Style.RESET_ALL)  # Reset the color after printing
+                    time.sleep(2)
+                    continue
+            
+
+        print(f"winner:{self.current_player[player_index].get_name()} \nscore: {self.current_player[player_index].get_score()}")
+        
+
+              
