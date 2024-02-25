@@ -1,13 +1,20 @@
 
 import random
 import pyfiglet
-import pyfiglet
 from colorama import Fore, Style
+import time
+import os
 
 class Dice:
 
     def __init__(self):
         self.__dice_dict= {
+            0: """\
+            ┌─────────┐
+            │ roll    │
+            │  the    │
+            │   dice !│
+            └─────────┘""",
             1: """\
             ┌─────────┐
             │         │
@@ -67,12 +74,19 @@ class Dice:
         print(overall_score_str)
         print()
         print(self.get_dice()[num_dice])
+        print(f"you rolled a {num_dice}" if num_dice != 0 else "")
         print('current score :' + current_score_str)
+        
+    def rolling_animation(self):
+        listy = list(self.__dice_dict.values())[1:]
+        
+        for _ in listy:
 
-
+            print(_)
+            time.sleep(0.15)
+            os.system('clear')
     
         
-
 
 
 

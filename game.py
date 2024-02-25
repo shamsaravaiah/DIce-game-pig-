@@ -20,16 +20,19 @@ class Game:
         turn_total = 0
         continue_var = None # now its roll 
         clear = clear_command
+        dice = Dice()
+        num_dice = 0        
         while not gave_over:
+            
             os.system(clear)
-            if self.current_player[player_index].get_score() >= 100:
+            if (self.current_player[player_index].get_score() >= 100) or (self.current_player[1 - player_index].get_score() >= 100):
                 gave_over = True
                 break
             else:
                 name = self.current_player[player_index].get_name()
                 score = self.current_player[player_index].get_score()
-                dice = Dice()
                 num_dice = dice.roll_dice()
+                dice.rolling_animation()
                 dice.display(name, score, turn_total, num_dice) #changed turn_total to 0
                 if num_dice != 1:
                     turn_total += num_dice
@@ -38,6 +41,8 @@ class Game:
                         print(f'\nSouxie chose to {continue_var}')
                         time.sleep(1)
                         if continue_var == 'roll':
+                            
+                            
                             continue
                         else:
                             self.current_player[player_index].set_score(turn_total)
@@ -57,6 +62,8 @@ class Game:
                             player_index = 1 - player_index
                             turn_total = 0
                         else: #roll
+                            
+                            
                             continue
                 else:
                     time.sleep(1)
@@ -67,6 +74,7 @@ class Game:
                     print(color + ascii_art + Style.RESET_ALL)  # Reset the color after printing
                     turn_total = 0
                     time.sleep(2)
+                    num_dice = 0
                     continue
             
 
