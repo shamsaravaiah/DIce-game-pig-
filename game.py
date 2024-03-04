@@ -37,7 +37,7 @@ class Game:
                 if num_dice != 1:
                     turn_total += num_dice
                     if not isinstance(self.current_player[player_index], Human_Player): #ill explain this dont cry
-                        continue_var = (self.current_player[player_index]).make_move(self.player1.get_score(), self.player2.get_score())
+                        continue_var = (self.current_player[player_index]).make_move(self.player1.get_score(), self.player2.get_score(),turn_total)
                         print(f'\nSouxie chose to {continue_var}')
                         time.sleep(1)
                         if continue_var == 'roll':
@@ -69,9 +69,9 @@ class Game:
                     time.sleep(1)
                     os.system('clear')
                     player_index = 1 - player_index
-                    color = Fore.RED  # For example, you can use Fore.RED for red text
+                    color = Fore.RED  
                     ascii_art = pyfiglet.figlet_format(f"{name} ROLLED A 1", font="big_money-se")
-                    print(color + ascii_art + Style.RESET_ALL)  # Reset the color after printing
+                    print(color + ascii_art + Style.RESET_ALL)  
                     turn_total = 0
                     time.sleep(2)
                     num_dice = 0
@@ -82,3 +82,4 @@ class Game:
         
 
               
+

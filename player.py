@@ -44,12 +44,26 @@ class Human_Player(Player):
 
 
 class Computer_Player_Easy(Player):
-    def make_move(self,opponent_score=None, my_score=None):
+    def make_move(self,opponent_score=None, my_score=None, turn_total=None):
         decision = random.choice(['roll', 'hold'])
         return decision
 
 
 class Computer_Player_Medium(Player):
+    def make_move( opponent_score, my_score, turn_total):
+        if turn_total >= 20:
+            return 'hold'
+        else:
+            'roll'
+        #Hold at 20' is a popular strategy. Each turn, the player rolls until they score 20 or more,
+        #then holds. This strategy has an 8% disadvantage against optimal play.' into a function
+
+
+        
+
+
+
+class Computer_Player_Hard(Player):
     """use the End race or keep pace appraoch"""
     def make_move(self, opponent_score, my_score ):
         difference = abs(opponent_score - my_score)
@@ -62,13 +76,12 @@ class Computer_Player_Medium(Player):
             return 'roll'
         else:
             return 'roll'
+        #End race or keep pace'. If either player has a score of 71 or higher, roll to win. 
+        #Otherwise, hold on 21 plus the difference between scores divided by 8. This has a 0.9% disadvantage against optimal play.
             
 
 
 
 
 
-
-class Computer_Player_Hard(Player):
-    pass
 
